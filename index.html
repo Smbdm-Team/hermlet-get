@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Set up SMBDM Agent</title>
+<style>
+  :root { color-scheme: dark light; --fg: #ececec; --muted: #9a9a9a; --bg: #0b0b0c; --line: rgba(255,255,255,.12); --code: #161618; }
+  @media (prefers-color-scheme: light) { :root { --fg: #141414; --muted: #5c5c5c; --bg: #fafafa; --line: rgba(0,0,0,.12); --code: #f0f0f0; } }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 system-ui, -apple-system, sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 48px 20px; }
+  h1 { font-size: 26px; margin: 0 0 8px; }
+  h2 { font-size: 17px; margin: 32px 0 8px; }
+  p, li { color: var(--muted); }
+  code, pre { font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; color: var(--fg); white-space: pre-wrap; word-break: break-all; }
+  button { font: inherit; font-size: 15px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Set up SMBDM Agent on your Mac</h1>
+  <p>Use your own Hermes Agent from your phone, with notifications. Version 0.8.0.</p>
+
+  <h2>Before you start</h2>
+  <ul>
+    <li>Hermes Agent is installed on this Mac.</li>
+    <li>Tailscale is on this Mac and your phone, signed in with your work account, and says Connected.</li>
+  </ul>
+
+  <h2>Install</h2>
+  <p>Open the <strong>Terminal</strong> app, paste this line and press Return:</p>
+  <pre id="line">curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash</pre>
+  <button type="button" id="copy">Copy the line</button>
+  <p>Choose a username and a password (at least 12 characters) when it asks. At the end it shows
+    your personal link: open it on your phone and add it to the Home Screen. Then turn on
+    <strong>Push notifications</strong> in the app's Settings.</p>
+
+  <h2>Update or repair</h2>
+  <p>Paste the same line again. Your sign-in, link and chats stay the same.</p>
+
+  <h2>Remove</h2>
+  <pre>curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash -s -- --uninstall</pre>
+</main>
+<script>
+  document.getElementById('copy').addEventListener('click', async (e) => {
+    try { await navigator.clipboard.writeText(document.getElementById('line').textContent); e.target.textContent = 'Copied'; }
+    catch { e.target.textContent = 'Select the line and copy it'; }
+  });
+</script>
+</body>
+</html>
