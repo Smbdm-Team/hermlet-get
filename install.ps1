@@ -4,7 +4,7 @@
 #   irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1 | iex                              set up, update or repair
 #   iex "& { $(irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1) } --uninstall"         remove it
 #
-# Downloads SMBDM Agent 0.8.3, checks the download is the published one (SHA-256), runs its
+# Downloads SMBDM Agent 0.8.4, checks the download is the published one (SHA-256), runs its
 # Windows installer with Hermes Agent's own Python (it asks for a username and password), then
 # deletes the download. This file holds no secrets. Exit codes (in $LASTEXITCODE) are the
 # installer's (team-setup.md); 11-12 are this file's. It never closes your PowerShell window.
@@ -14,9 +14,9 @@
 function Install-SmbdmAgent {
   $ErrorActionPreference = 'Stop'
   $ProgressPreference = 'SilentlyContinue'
-  $version = '0.8.3'
-  $url = if ($env:SMBDM_KIT_URL) { $env:SMBDM_KIT_URL } else { 'https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.8.3/smbdm-agent-kit-0.8.3.zip' }
-  $sha = if ($env:SMBDM_KIT_SHA256) { $env:SMBDM_KIT_SHA256 } else { '8c154927c0701382708d91fa0ad40735a739d8a818b1e40d1e75677e9a32910d' }
+  $version = '0.8.4'
+  $url = if ($env:SMBDM_KIT_URL) { $env:SMBDM_KIT_URL } else { 'https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.8.4/smbdm-agent-kit-0.8.4.zip' }
+  $sha = if ($env:SMBDM_KIT_SHA256) { $env:SMBDM_KIT_SHA256 } else { '2f0b835189197b092d5279eeb54762ef1cfa90774229f6b483df4ff5b71527b1' }
   $global:LASTEXITCODE = 0
 
   if ($env:OS -ne 'Windows_NT') {
