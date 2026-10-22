@@ -20,19 +20,27 @@
 </head>
 <body>
 <main>
-  <h1>Set up SMBDM Agent on your Mac</h1>
-  <p>Use your own Hermes Agent from your phone, with notifications. Version 0.8.0.</p>
+  <h1>Set up SMBDM Agent</h1>
+  <p>Use your own Hermes Agent from your phone, with notifications. Version 0.8.1.
+    Set it up on the computer where your Hermes Agent runs: a Mac or a Windows PC.</p>
 
   <h2>Before you start</h2>
   <ul>
-    <li>Hermes Agent is installed on this Mac.</li>
-    <li>Tailscale is on this Mac and your phone, signed in with your work account, and says Connected.</li>
+    <li>Hermes Agent is installed on that computer.</li>
+    <li>Tailscale is on that computer and your phone, signed in with your work account, and says Connected.</li>
   </ul>
 
-  <h2>Install</h2>
+  <h2>On a Mac</h2>
   <p>Open the <strong>Terminal</strong> app, paste this line and press Return:</p>
-  <pre id="line">curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash</pre>
-  <button type="button" id="copy">Copy the line</button>
+  <pre id="mac">curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash</pre>
+  <button type="button" data-copy="mac">Copy the Mac line</button>
+
+  <h2>On Windows</h2>
+  <p>Open <strong>PowerShell</strong> (Start menu, type PowerShell), paste this line and press Enter:</p>
+  <pre id="win">irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1 | iex</pre>
+  <button type="button" data-copy="win">Copy the Windows line</button>
+
+  <h2>Then</h2>
   <p>Choose a username and a password (at least 12 characters) when it asks. At the end it shows
     your personal link: open it on your phone and add it to the Home Screen. Then turn on
     <strong>Push notifications</strong> in the app's Settings.</p>
@@ -41,13 +49,18 @@
   <p>Paste the same line again. Your sign-in, link and chats stay the same.</p>
 
   <h2>Remove</h2>
+  <p>Mac:</p>
   <pre>curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash -s -- --uninstall</pre>
+  <p>Windows:</p>
+  <pre>iex "&amp; { $(irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1) } --uninstall"</pre>
 </main>
 <script>
-  document.getElementById('copy').addEventListener('click', async (e) => {
-    try { await navigator.clipboard.writeText(document.getElementById('line').textContent); e.target.textContent = 'Copied'; }
-    catch { e.target.textContent = 'Select the line and copy it'; }
-  });
+  for (const b of document.querySelectorAll('button[data-copy]')) {
+    b.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(document.getElementById(b.dataset.copy).textContent); b.textContent = 'Copied'; }
+      catch { b.textContent = 'Select the line and copy it'; }
+    });
+  }
 </script>
 </body>
 </html>
