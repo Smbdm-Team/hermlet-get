@@ -4,7 +4,7 @@
 #   curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash                     set up, update or repair
 #   curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash -s -- --uninstall   remove it
 #
-# Downloads SMBDM Agent 0.8.5, checks the download is the published one (SHA-256), runs its
+# Downloads SMBDM Agent 0.8.6, checks the download is the published one (SHA-256), runs its
 # installer with your keyboard (it asks for a username and password), then deletes the download.
 # This file holds no secrets. Exit codes are the installer's (team-setup.md); 10-12 are this file's.
 #
@@ -12,8 +12,8 @@
 set -euo pipefail
 
 main() {
-  local url="${SMBDM_KIT_URL:-https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.8.5/smbdm-agent-kit-0.8.5.zip}"
-  local sha="${SMBDM_KIT_SHA256:-da4265afb3f2266a86a731a26187b3515b2832b4b22d8b29067cb4b74964cc3f}"
+  local url="${SMBDM_KIT_URL:-https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.8.6/smbdm-agent-kit-0.8.6.zip}"
+  local sha="${SMBDM_KIT_SHA256:-2044b1bb7222faa5b3923c2e222e312487bec7a6ee6b5148ca7f3d5008756e88}"
   local tty="${SMBDM_TTY:-/dev/tty}"
   local tmp got kit
 
@@ -28,7 +28,7 @@ main() {
     exit 10
   fi
 
-  echo "Downloading SMBDM Agent 0.8.5..."
+  echo "Downloading SMBDM Agent 0.8.6..."
   tmp="$(mktemp -d "${TMPDIR:-/tmp}/smbdm-agent.XXXXXX")"
   # shellcheck disable=SC2064 # expand now: tmp is local
   trap "rm -rf '$tmp'" EXIT
