@@ -3,5 +3,5 @@
   "kit_url": "https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.8.10/smbdm-agent-kit-0.8.10.zip",
   "sha256": "629e8b502f92c281dc8aee7309fea97e9af8d6334e0e287e43efe0e53d41aafb",
   "published": "2026-10-23T15:34:59Z",
-  "hold": false
+  "hold": true
 }
