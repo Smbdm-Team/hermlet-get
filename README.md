@@ -54,6 +54,14 @@ sign-in required" or "Hermes couldn't start"). Do this once:
 Desktop stays signed in after that. If Desktop was open during the setup, the setup leaves it
 alone and says so: quit Desktop, paste the line again, then open Desktop.
 
+**To put Desktop back the way it was:**
+
+- **Quick (keeps SMBDM Agent):** in Hermes Desktop, switch the gateway at the bottom of the chats
+  list to **This device**, then right-click the home icon and choose **Set as default**. A chat open
+  in both Desktop and SMBDM Agent may then say *"open in another Hermes window"* again.
+- **Full undo:** [remove SMBDM Agent](#update-or-remove). That puts Desktop's settings back exactly
+  as they were before the setup (it kept a backup).
+
 ## Windows PC
 
 1. Open **PowerShell** (press the **Windows key**, type **PowerShell**, press **Enter**). A normal
@@ -101,7 +109,8 @@ anything that's missing. Then close and reopen the app on your phone.
 | Windows (PowerShell) | `iex "& { $(irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1) } --uninstall"` |
 
 It removes SMBDM Agent, its push notifications plugin, the sign-in it set up and its Tailscale
-sharing, and puts back anything it replaced (including Hermes Desktop's settings). Hermes Agent and
+sharing, and puts back anything it replaced, including Hermes Desktop's settings (from the backup
+it made during setup). Hermes Agent and
 your chats are not touched. Then delete the icon from your phone.
 
 ## If something goes wrong
