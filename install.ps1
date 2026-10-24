@@ -1,10 +1,10 @@
-# Hermlet: one-line setup for your own Windows PC (published at https://smbdm-team.github.io/smbdm-agent-get/install.ps1).
+# Hermlet: one-line setup for your own Windows PC (published at https://smbdm-team.github.io/hermlet-get/install.ps1).
 # Open PowerShell (Start menu, type PowerShell, open it) and paste:
 #
-#   irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1 | iex                              set up, update or repair
-#   iex "& { $(irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1) } --uninstall"         remove it
+#   irm https://smbdm-team.github.io/hermlet-get/install.ps1 | iex                              set up, update or repair
+#   iex "& { $(irm https://smbdm-team.github.io/hermlet-get/install.ps1) } --uninstall"         remove it
 #
-# Downloads Hermlet 0.10.0, checks the download is the published one (SHA-256), runs its
+# Downloads Hermlet 0.10.1, checks the download is the published one (SHA-256), runs its
 # Windows installer with Hermes Agent's own Python (it asks for a username and password), then
 # deletes the download. This file holds no secrets. Exit codes (in $LASTEXITCODE) are the
 # installer's (team-setup.md); 11-12 are this file's. It never closes your PowerShell window.
@@ -15,14 +15,14 @@
 function Install-Hermlet {
   $ErrorActionPreference = 'Stop'
   $ProgressPreference = 'SilentlyContinue'
-  $version = '0.10.0'
-  $url = if ($env:HERMLET_KIT_URL) { $env:HERMLET_KIT_URL } else { 'https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.10.0/hermlet-kit-0.10.0.zip' }
-  $sha = if ($env:HERMLET_KIT_SHA256) { $env:HERMLET_KIT_SHA256 } else { 'f0bdee688ab18c337198438996930695f24a10b308d6aeb50af3dd2f17a2853b' }
+  $version = '0.10.1'
+  $url = if ($env:HERMLET_KIT_URL) { $env:HERMLET_KIT_URL } else { 'https://github.com/Smbdm-Team/hermlet-get/releases/download/v0.10.1/hermlet-kit-0.10.1.zip' }
+  $sha = if ($env:HERMLET_KIT_SHA256) { $env:HERMLET_KIT_SHA256 } else { 'e2184184b541db379a28f1a6fc3b1c262c5ffb86648f065fbc7e1d7676b1d6f5' }
   $global:LASTEXITCODE = 0
 
   if ($env:OS -ne 'Windows_NT') {
     Write-Host 'This line sets Hermlet up on Windows. On a Mac, paste this into Terminal instead:'
-    Write-Host '  curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash'
+    Write-Host '  curl -fsSL https://smbdm-team.github.io/hermlet-get/install | bash'
     $global:LASTEXITCODE = 3; return
   }
   $hh = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { Join-Path $env:LOCALAPPDATA 'hermes' }

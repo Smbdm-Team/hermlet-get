@@ -1,7 +1,7 @@
 {
-  "version": "0.10.0",
-  "kit_url": "https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.10.0/hermlet-kit-0.10.0.zip",
-  "sha256": "f0bdee688ab18c337198438996930695f24a10b308d6aeb50af3dd2f17a2853b",
-  "published": "2026-10-24T06:58:09Z",
+  "version": "0.10.1",
+  "kit_url": "https://github.com/Smbdm-Team/hermlet-get/releases/download/v0.10.1/hermlet-kit-0.10.1.zip",
+  "sha256": "e2184184b541db379a28f1a6fc3b1c262c5ffb86648f065fbc7e1d7676b1d6f5",
+  "published": "2026-10-24T07:16:47Z",
   "hold": false
 }

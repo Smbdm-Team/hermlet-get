@@ -21,7 +21,7 @@
 <body>
 <main>
   <h1>Set up Hermlet</h1>
-  <p>Use your own Hermes Agent from your phone, with notifications. Version 0.10.0.
+  <p>Use your own Hermes Agent from your phone, with notifications. Version 0.10.1.
     Set it up on the computer where your Hermes Agent runs: a Mac or a Windows PC.</p>
 
   <h2>Before you start</h2>
@@ -32,12 +32,12 @@
 
   <h2>On a Mac</h2>
   <p>Open the <strong>Terminal</strong> app, paste this line and press Return:</p>
-  <pre id="mac">curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash</pre>
+  <pre id="mac">curl -fsSL https://smbdm-team.github.io/hermlet-get/install | bash</pre>
   <button type="button" data-copy="mac">Copy the Mac line</button>
 
   <h2>On Windows</h2>
   <p>Open <strong>PowerShell</strong> (Start menu, type PowerShell), paste this line and press Enter:</p>
-  <pre id="win">irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1 | iex</pre>
+  <pre id="win">irm https://smbdm-team.github.io/hermlet-get/install.ps1 | iex</pre>
   <button type="button" data-copy="win">Copy the Windows line</button>
 
   <h2>Then</h2>
@@ -57,9 +57,9 @@
 
   <h2>Remove</h2>
   <p>Mac:</p>
-  <pre>curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash -s -- --uninstall</pre>
+  <pre>curl -fsSL https://smbdm-team.github.io/hermlet-get/install | bash -s -- --uninstall</pre>
   <p>Windows:</p>
-  <pre>iex "&amp; { $(irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1) } --uninstall"</pre>
+  <pre>iex "&amp; { $(irm https://smbdm-team.github.io/hermlet-get/install.ps1) } --uninstall"</pre>
 </main>
 <script>
   for (const b of document.querySelectorAll('button[data-copy]')) {
