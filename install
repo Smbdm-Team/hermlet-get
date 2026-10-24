@@ -1,18 +1,18 @@
 #!/bin/bash
-# SMBDM Agent is now Hermlo. This is the old one-line setup address (https://smbdm-team.github.io/smbdm-agent-get/install): it
-# only says which line to paste instead (scripts/publish-get.sh --forwarder), and exits 1.
+# SMBDM Agent is now Hermlo. This is the old one-line setup address (https://smbdm-team.github.io/smbdm-agent-get/install). It still
+# works: it downloads Hermlo's one-line setup (https://smbdm-team.github.io/hermlo-get/install) and runs it with the same
+# options, so the old line does exactly what the new one does (scripts/publish-get.sh --forwarder).
+# Exit codes are Hermlo's (team-setup.md); 13 = Hermlo's setup couldn't be downloaded.
+#
+# Everything is inside one function, called on the last line: if the download is cut off, nothing runs.
 main() {
-  local line="curl -fsSL https://smbdm-team.github.io/hermlo-get/install | bash" what="It moves your SMBDM Agent setup over: same link, same sign-in."
-  case " $* " in
-    *" --uninstall "*)
-      line="curl -fsSL https://smbdm-team.github.io/hermlo-get/install | bash -s -- --uninstall"
-      what="It removes SMBDM Agent too."
-      ;;
-  esac
-  echo "SMBDM Agent is now Hermlo. Run this instead:" >&2
-  echo "  $line" >&2
-  echo "$what" >&2
-  exit 1
+  local new="https://smbdm-team.github.io/hermlo-get/install" s
+  echo "SMBDM Agent is now Hermlo: running Hermlo's setup. (The new line is: curl -fsSL $new | bash)" >&2
+  if ! s="$(curl -fsSL "$new")" || [ -z "$s" ]; then
+    echo "Couldn't download Hermlo's setup from $new. Check the internet connection and try again." >&2
+    exit 13
+  fi
+  printf '%s\n' "$s" | bash -s -- "$@"
 }
 
 main "$@"
