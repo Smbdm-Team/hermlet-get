@@ -1,18 +1,57 @@
 #!/bin/bash
-# SMBDM Agent is now Hermlo. This is the old one-line setup address (https://smbdm-team.github.io/smbdm-agent-get/install). It still
-# works: it downloads Hermlo's one-line setup (https://smbdm-team.github.io/hermlo-get/install) and runs it with the same
-# options, so the old line does exactly what the new one does (scripts/publish-get.sh --forwarder).
-# Exit codes are Hermlo's (team-setup.md); 13 = Hermlo's setup couldn't be downloaded.
+# Hermlo: one-line setup for your own Mac (published at https://smbdm-team.github.io/smbdm-agent-get/install).
 #
-# Everything is inside one function, called on the last line: if the download is cut off, nothing runs.
+#   curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash                     set up, update or repair
+#   curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash -s -- --uninstall   remove it
+#
+# Downloads Hermlo 0.9.1, checks the download is the published one (SHA-256), runs its
+# installer with your keyboard (it asks for a username and password), then deletes the download.
+# This file holds no secrets. Exit codes are the installer's (team-setup.md); 10-12 are this file's.
+# Hermlo used to be called SMBDM Agent: its installer moves an SMBDM Agent install over by itself.
+#
+# Everything is inside main(), called on the last line: if the download is cut off, nothing runs.
+set -euo pipefail
+
 main() {
-  local new="https://smbdm-team.github.io/hermlo-get/install" s
-  echo "SMBDM Agent is now Hermlo: running Hermlo's setup. (The new line is: curl -fsSL $new | bash)" >&2
-  if ! s="$(curl -fsSL "$new")" || [ -z "$s" ]; then
-    echo "Couldn't download Hermlo's setup from $new. Check the internet connection and try again." >&2
-    exit 13
+  local url="${HERMLO_KIT_URL:-https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.9.1/hermlo-kit-0.9.1.zip}"
+  local sha="${HERMLO_KIT_SHA256:-248b335713f7ce6983a82b61f81e8c8081273b3446699c310fb0ed18a6cc715f}"
+  local tty="${HERMLO_TTY:-/dev/tty}"
+  local tmp got kit
+
+  if [ "$(uname -s)" != Darwin ]; then
+    echo "This line sets Hermlo up on a Mac. On Windows, paste this into PowerShell instead:" >&2
+    echo "  irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1 | iex" >&2
+    echo "On Linux, ask the tech team." >&2
+    exit 3
   fi
-  printf '%s\n' "$s" | bash -s -- "$@"
+  if ! { : <"$tty"; } 2>/dev/null; then
+    echo "Paste this line into the Terminal app (it asks you for a password, so it needs a keyboard)." >&2
+    exit 10
+  fi
+
+  echo "Downloading Hermlo 0.9.1..."
+  tmp="$(mktemp -d "${TMPDIR:-/tmp}/hermlo.XXXXXX")"
+  # shellcheck disable=SC2064 # expand now: tmp is local
+  trap "rm -rf '$tmp'" EXIT
+  if ! curl -fsSL --retry 2 -m 300 "$url" -o "$tmp/kit.zip" </dev/null; then
+    echo "STOPPED: couldn't download Hermlo. Check the internet connection and paste the line again." >&2
+    exit 11
+  fi
+  got="$(shasum -a 256 "$tmp/kit.zip" | cut -d' ' -f1)"
+  if [ "$got" != "$sha" ]; then
+    echo "STOPPED: the download isn't the published Hermlo (its checksum doesn't match), so it" >&2
+    echo "wasn't run. Paste the line again; if it happens again, tell the tech team." >&2
+    exit 12
+  fi
+  unzip -q "$tmp/kit.zip" -d "$tmp/kit"
+  kit="$(find "$tmp/kit" -mindepth 2 -maxdepth 2 -name install.sh -print -quit)"
+  if [ -z "$kit" ]; then
+    echo "STOPPED: the download has no installer in it. Tell the tech team." >&2
+    exit 12
+  fi
+  local rc=0
+  bash "$kit" "$@" <"$tty" || rc=$?
+  return "$rc"
 }
 
 main "$@"

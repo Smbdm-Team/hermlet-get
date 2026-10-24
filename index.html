@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>SMBDM Agent is now Hermlo</title>
+<title>Set up Hermlo</title>
 <style>
   :root { color-scheme: dark light; --fg: #ececec; --muted: #9a9a9a; --bg: #0b0b0c; --line: rgba(255,255,255,.12); --code: #161618; }
   @media (prefers-color-scheme: light) { :root { --fg: #141414; --muted: #5c5c5c; --bg: #fafafa; --line: rgba(0,0,0,.12); --code: #f0f0f0; } }
@@ -12,23 +12,61 @@
   main { max-width: 640px; margin: 0 auto; padding: 48px 20px; }
   h1 { font-size: 26px; margin: 0 0 8px; }
   h2 { font-size: 17px; margin: 32px 0 8px; }
-  p { color: var(--muted); }
-  a { color: inherit; }
-  pre { font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--code); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; color: var(--fg); white-space: pre-wrap; word-break: break-all; }
+  p, li { color: var(--muted); }
+  code, pre { font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; overflow-x: auto; color: var(--fg); white-space: pre-wrap; word-break: break-all; }
+  button { font: inherit; font-size: 15px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
 </style>
 </head>
 <body>
 <main>
-  <h1>SMBDM Agent is now Hermlo</h1>
-  <p>The old lines still work: they now run Hermlo's setup. Or use the new lines below. Run one
-    once on the computer where SMBDM Agent was set up: it moves your setup over, with the same link
-    and sign-in, so your phone keeps working. To get the new H icon, delete the old icon from the
-    Home Screen and add the link again.</p>
+  <h1>Set up Hermlo</h1>
+  <p>Use your own Hermes Agent from your phone, with notifications. Version 0.9.1.
+    Set it up on the computer where your Hermes Agent runs: a Mac or a Windows PC.</p>
+
+  <h2>Before you start</h2>
+  <ul>
+    <li>Hermes Agent is installed on that computer.</li>
+    <li>Tailscale is on that computer and your phone, signed in with your work account, and says Connected.</li>
+  </ul>
+
   <h2>On a Mac</h2>
-  <pre>curl -fsSL https://smbdm-team.github.io/hermlo-get/install | bash</pre>
-  <h2>On Windows (PowerShell)</h2>
-  <pre>irm https://smbdm-team.github.io/hermlo-get/install.ps1 | iex</pre>
-  <p>More: <a href="https://smbdm-team.github.io/hermlo-get/">https://smbdm-team.github.io/hermlo-get</a></p>
+  <p>Open the <strong>Terminal</strong> app, paste this line and press Return:</p>
+  <pre id="mac">curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash</pre>
+  <button type="button" data-copy="mac">Copy the Mac line</button>
+
+  <h2>On Windows</h2>
+  <p>Open <strong>PowerShell</strong> (Start menu, type PowerShell), paste this line and press Enter:</p>
+  <pre id="win">irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1 | iex</pre>
+  <button type="button" data-copy="win">Copy the Windows line</button>
+
+  <h2>Then</h2>
+  <p>Choose a username and a password (at least 8 characters) when it asks. At the end it shows
+    your personal link: open it on your phone and add it to the Home Screen. Then turn on
+    <strong>Push notifications</strong> in the app's Settings.</p>
+
+  <h2>Coming from SMBDM Agent</h2>
+  <p>SMBDM Agent is now Hermlo: paste the line above once (the same line as before). It moves your setup over: the same
+    link and sign-in, your home-screen look and update settings, and keeps a copy of the old folder.
+    Your phone keeps working; to get the new H icon, delete the old icon and add the link to the
+    Home Screen again. If you use the native SMBDM Agent app, uninstall it first.</p>
+
+  <h2>Update or repair</h2>
+  <p>Paste the same line again. Your sign-in, link and chats stay the same.</p>
+
+  <h2>Remove</h2>
+  <p>Mac:</p>
+  <pre>curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash -s -- --uninstall</pre>
+  <p>Windows:</p>
+  <pre>iex "&amp; { $(irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1) } --uninstall"</pre>
 </main>
+<script>
+  for (const b of document.querySelectorAll('button[data-copy]')) {
+    b.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(document.getElementById(b.dataset.copy).textContent); b.textContent = 'Copied'; }
+      catch { b.textContent = 'Select the line and copy it'; }
+    });
+  }
+</script>
 </body>
 </html>
