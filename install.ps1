@@ -1,27 +1,27 @@
-# Hermlo: one-line setup for your own Windows PC (published at https://smbdm-team.github.io/smbdm-agent-get/install.ps1).
+# Hermlet: one-line setup for your own Windows PC (published at https://smbdm-team.github.io/smbdm-agent-get/install.ps1).
 # Open PowerShell (Start menu, type PowerShell, open it) and paste:
 #
 #   irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1 | iex                              set up, update or repair
 #   iex "& { $(irm https://smbdm-team.github.io/smbdm-agent-get/install.ps1) } --uninstall"         remove it
 #
-# Downloads Hermlo 0.9.1, checks the download is the published one (SHA-256), runs its
+# Downloads Hermlet 0.10.0, checks the download is the published one (SHA-256), runs its
 # Windows installer with Hermes Agent's own Python (it asks for a username and password), then
 # deletes the download. This file holds no secrets. Exit codes (in $LASTEXITCODE) are the
 # installer's (team-setup.md); 11-12 are this file's. It never closes your PowerShell window.
-# Hermlo used to be called SMBDM Agent: its installer moves an SMBDM Agent install over by itself.
+# Hermlet used to be called Hermlo (and before that SMBDM Agent): its installer moves those installs over.
 #
 # Everything is inside one function, called on the last line: if the download is cut off, nothing runs.
 
-function Install-Hermlo {
+function Install-Hermlet {
   $ErrorActionPreference = 'Stop'
   $ProgressPreference = 'SilentlyContinue'
-  $version = '0.9.1'
-  $url = if ($env:HERMLO_KIT_URL) { $env:HERMLO_KIT_URL } else { 'https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.9.1/hermlo-kit-0.9.1.zip' }
-  $sha = if ($env:HERMLO_KIT_SHA256) { $env:HERMLO_KIT_SHA256 } else { '248b335713f7ce6983a82b61f81e8c8081273b3446699c310fb0ed18a6cc715f' }
+  $version = '0.10.0'
+  $url = if ($env:HERMLET_KIT_URL) { $env:HERMLET_KIT_URL } else { 'https://github.com/Smbdm-Team/smbdm-agent-get/releases/download/v0.10.0/hermlet-kit-0.10.0.zip' }
+  $sha = if ($env:HERMLET_KIT_SHA256) { $env:HERMLET_KIT_SHA256 } else { 'f0bdee688ab18c337198438996930695f24a10b308d6aeb50af3dd2f17a2853b' }
   $global:LASTEXITCODE = 0
 
   if ($env:OS -ne 'Windows_NT') {
-    Write-Host 'This line sets Hermlo up on Windows. On a Mac, paste this into Terminal instead:'
+    Write-Host 'This line sets Hermlet up on Windows. On a Mac, paste this into Terminal instead:'
     Write-Host '  curl -fsSL https://smbdm-team.github.io/smbdm-agent-get/install | bash'
     $global:LASTEXITCODE = 3; return
   }
@@ -35,20 +35,20 @@ function Install-Hermlo {
 
   # Windows PowerShell 5.1 may not offer TLS 1.2 by itself; GitHub needs it.
   [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
-  Write-Host "Downloading Hermlo $version..."
-  $tmp = Join-Path ([IO.Path]::GetTempPath()) ('hermlo-' + [guid]::NewGuid().ToString('N').Substring(0, 8))
+  Write-Host "Downloading Hermlet $version..."
+  $tmp = Join-Path ([IO.Path]::GetTempPath()) ('hermlet-' + [guid]::NewGuid().ToString('N').Substring(0, 8))
   New-Item -ItemType Directory -Path $tmp | Out-Null
   try {
     $zip = Join-Path $tmp 'kit.zip'
     try {
       Invoke-WebRequest -UseBasicParsing -Uri $url -OutFile $zip -TimeoutSec 300
     } catch {
-      Write-Host "STOPPED: couldn't download Hermlo. Check the internet connection and paste the line again." -ForegroundColor Red
+      Write-Host "STOPPED: couldn't download Hermlet. Check the internet connection and paste the line again." -ForegroundColor Red
       $global:LASTEXITCODE = 11; return
     }
     $got = (Get-FileHash -Algorithm SHA256 -LiteralPath $zip).Hash.ToLowerInvariant()
     if ($got -ne $sha.ToLowerInvariant()) {
-      Write-Host "STOPPED: the download isn't the published Hermlo (its checksum doesn't match), so it" -ForegroundColor Red
+      Write-Host "STOPPED: the download isn't the published Hermlet (its checksum doesn't match), so it" -ForegroundColor Red
       Write-Host "wasn't run. Paste the line again; if it happens again, tell the tech team."
       $global:LASTEXITCODE = 12; return
     }
@@ -71,4 +71,4 @@ function Install-Hermlo {
   }
 }
 
-Install-Hermlo @args
+Install-Hermlet @args
