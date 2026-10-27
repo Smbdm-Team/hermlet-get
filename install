@@ -4,7 +4,7 @@
 #   curl -fsSL https://smbdm-team.github.io/hermlet-get/install | bash                     set up, update or repair
 #   curl -fsSL https://smbdm-team.github.io/hermlet-get/install | bash -s -- --uninstall   remove it
 #
-# Downloads Hermlet 0.10.10, checks the download is the published one (SHA-256), runs its
+# Downloads Hermlet 0.10.11, checks the download is the published one (SHA-256), runs its
 # installer with your keyboard (it asks for a username and password), then deletes the download.
 # This file holds no secrets. Exit codes are the installer's (team-setup.md); 10-12 are this file's.
 # Hermlet used to be called SMBDM Agent: its installer moves those installs over.
@@ -13,8 +13,8 @@
 set -euo pipefail
 
 main() {
-  local url="${HERMLET_KIT_URL:-https://github.com/Smbdm-Team/hermlet-get/releases/download/v0.10.10/hermlet-kit-0.10.10.zip}"
-  local sha="${HERMLET_KIT_SHA256:-9b0326ea9cd1aad132230a1a5b17e6fd831164f20df08cb59df297dbb39eac96}"
+  local url="${HERMLET_KIT_URL:-https://github.com/Smbdm-Team/hermlet-get/releases/download/v0.10.11/hermlet-kit-0.10.11.zip}"
+  local sha="${HERMLET_KIT_SHA256:-e3ff77855a30a7e696659cdfa9aceeb3a4390183b714761f2e5c3a2b5ac799e4}"
   local tty="${HERMLET_TTY:-/dev/tty}"
   local tmp got kit
 
@@ -29,7 +29,7 @@ main() {
     exit 10
   fi
 
-  echo "Downloading Hermlet 0.10.10..."
+  echo "Downloading Hermlet 0.10.11..."
   tmp="$(mktemp -d "${TMPDIR:-/tmp}/hermlet.XXXXXX")"
   # shellcheck disable=SC2064 # expand now: tmp is local
   trap "rm -rf '$tmp'" EXIT
