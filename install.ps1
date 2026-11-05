@@ -4,7 +4,7 @@
 #   irm https://smbdm-team.github.io/hermlet-get/install.ps1 | iex                              set up, update or repair
 #   iex "& { $(irm https://smbdm-team.github.io/hermlet-get/install.ps1) } --uninstall"         remove it
 #
-# Downloads Hermlet 0.10.13, checks the download is the published one (SHA-256), runs its
+# Downloads Hermlet 0.11.0, checks the download is the published one (SHA-256), runs its
 # Windows installer with Hermes Agent's own Python (it asks for a username and password), then
 # deletes the download. This file holds no secrets. Exit codes (in $LASTEXITCODE) are the
 # installer's (team-setup.md); 11-12 are this file's. It never closes your PowerShell window.
@@ -15,9 +15,9 @@
 function Install-Hermlet {
   $ErrorActionPreference = 'Stop'
   $ProgressPreference = 'SilentlyContinue'
-  $version = '0.10.13'
-  $url = if ($env:HERMLET_KIT_URL) { $env:HERMLET_KIT_URL } else { 'https://github.com/Smbdm-Team/hermlet-get/releases/download/v0.10.13/hermlet-kit-0.10.13.zip' }
-  $sha = if ($env:HERMLET_KIT_SHA256) { $env:HERMLET_KIT_SHA256 } else { '0563d9b0c4f1afae0da0fdc4da93142ddf460bb32077f58c6474a3549480f6e1' }
+  $version = '0.11.0'
+  $url = if ($env:HERMLET_KIT_URL) { $env:HERMLET_KIT_URL } else { 'https://github.com/Smbdm-Team/hermlet-get/releases/download/v0.11.0/hermlet-kit-0.11.0.zip' }
+  $sha = if ($env:HERMLET_KIT_SHA256) { $env:HERMLET_KIT_SHA256 } else { 'a95b591c4667bf401552e5676e0b9f58ab457e97178da1a416cc0ab9d7a8ac65' }
   $global:LASTEXITCODE = 0
 
   if ($env:OS -ne 'Windows_NT') {
