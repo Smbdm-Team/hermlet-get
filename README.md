@@ -1,5 +1,8 @@
 # Hermlet: one-line setup
 
+> **No longer developed (since 18 November 2026).** Version 0.11.2 is the last one: it still installs and
+> works, but it gets no new versions or fixes.
+
 Hermlet (formerly SMBDM Agent) lets you use your own Hermes Agent from your phone, tablet or
 another computer. Paste one line on the computer that runs Hermes:
 
